@@ -1,69 +1,39 @@
 import 'package:flutter/material.dart';
-import 'src/components/drawer.dart';
+import 'src/pages/home.dart';
+import 'src/pages/noteform.dart';
+import 'src/constants/routes.dart';
+import 'package:provider/provider.dart';
+import 'src/models/note.dart';
 
-void main() => runApp(MyApp());
+import 'src/components/routebuilder.dart';
+
+void main() => {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => NoteModel(),
+      child: MyApp()
+    )
+  )
+};
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Custom Notepad',
-      home: Home(),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  @override
-  HomeState createState() => HomeState();
-}
-
-class HomeState extends State<Home> {
-  final notes = List<String>();
-
-  addNotes(){
-    setState(() {
-      notes.add('a');
-    });
-  }
-
-  Widget _buildList() {
-    return notes.isNotEmpty ? 
-      ListView.builder(
-        itemCount: notes.length,
-        itemBuilder: (BuildContext ctxt, int index) {
-          return new Text(notes[index]);
-        },
-      ) :
-      Center(
-        child: Text('List is currently empty'),
-      );
-  }
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Notepad')
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: _buildList()
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: Icon(Icons.add),
-                iconSize: 30,
-                tooltip: 'Add Notes',
-                onPressed: addNotes,
-              )
-            ]
-          ),
-        ],
-      ),
-      drawer: DrawerBuilder()
+      initialRoute: '/',
+      // routes: {
+      //   '/': (context) => Home(),
+      //   '/add': (context) => NoteForm()
+      // },
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name){
+          case HOME:
+            return SlideFromRightRoute(page: Home());
+          case ADD_NOTE:
+            return SlideFromRightRoute(page: NoteForm());
+        }
+      },
     );
   }
 }
