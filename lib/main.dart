@@ -1,11 +1,20 @@
+/* dependencies */
 import 'package:flutter/material.dart';
-import 'src/pages/home.dart';
-import 'src/pages/noteform.dart';
-import 'src/constants/routes.dart';
 import 'package:provider/provider.dart';
+
+/* pages */
+import 'src/pages/home.dart';
+import 'src/pages/note_form.dart';
+import 'src/pages/view_note.dart';
+
+/* constants */
+import 'src/constants/routes.dart';
+
+/* models */
 import 'src/models/note.dart';
 
-import 'src/components/routebuilder.dart';
+/* components */
+import 'src/components/route_builder.dart';
 
 void main() => {
   runApp(
@@ -32,6 +41,14 @@ class MyApp extends StatelessWidget {
             return SlideFromRightRoute(page: Home());
           case ADD_NOTE:
             return SlideFromRightRoute(page: NoteForm());
+          case EDIT_NOTE:
+            int index = settings.arguments as int;
+            return SlideFromRightRoute(page: NoteForm(index));
+          case VIEW_NOTE:
+            int mynote = settings.arguments as int;
+            return SlideFromRightRoute(page: MyNote(mynote));
+          default:
+            return SlideFromRightRoute(page: Home());
         }
       },
     );
