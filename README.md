@@ -1,5 +1,24 @@
 # Flutter Notepad
 
-This branch is used for development purposes - which means that in the future when more feature-specific tasks are being done, then I will branch out from the dev branch (F-001 -- Feature-001) to work on that particular feature only.
+There is no official name for this mobile app.
+The purpose of the mobile app is an open source notepad application that stores notes locally on-device (without using any APIs) and supports encryption by locking specific notes, a group of notes and etc.
 
-Otherwise, I will mainly use only dev branch to work on everything until it is production-ready.
+The original purpose of this project is to create a fully-featured notes with at least an okay UI/UX for personal use and also a gateway for me to learn Flutter.
+
+# TODO Features
+- [X] Create notes
+- [X] View notes
+- [X] Edit notes
+- [X] Delete notes
+- [ ] Sort notes
+- [ ] Archive notes
+- [ ] Categorize notes (unlocked/open, locked, open group, locked group, archived)
+- [ ] Data Encryption
+- [X] Data Persistence
+- [ ] UI Design & UX Improvements
+
+# Planned Features
+* Let users set "reminder alarms" to notes (maybe useful? but normal alarms can also achieve the same thing)
+* Switch between typing or drawing on notes
+* Choose encryption type (?)
+* Labeling features (bookmark, color labels, creating a page to store notes, etc.)
