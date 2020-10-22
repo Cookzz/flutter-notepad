@@ -34,7 +34,8 @@ class Home extends StatelessWidget {
                   iconSize: 25,
                   color: Colors.white,
                   tooltip: 'Add Notes',
-                  onPressed: () {
+                  onPressed: () async {
+                    await Provider.of<NoteModel>(context, listen: false).clearActiveNote();
                     Navigator.pushNamed(context, ADD_NOTE);
                   },
                 )
@@ -69,18 +70,27 @@ class NoteListBuilder extends Consumer<NoteModel> {
                   caption: 'Edit',
                   color: Colors.grey[300],
                   icon: Icons.edit,
-                  onTap: () => Navigator.pushNamed(context, EDIT_NOTE, arguments: index)
+                  onTap: () async {
+                    await note.setActiveNote(notes[index].id);
+                    Navigator.pushNamed(context, EDIT_NOTE);
+                  }
                 ),
                 IconSlideAction(
                   caption: 'Delete',
                   color: Colors.red,
                   icon: Icons.delete,
-                  onTap: () => note.deleteNote(index)
+                  onTap: () async {
+                    await note.deleteNote(notes[index].id);
+                  }
                 )
               ],
 
               child: InkWell(
-                onTap: () => Navigator.pushNamed(context, VIEW_NOTE, arguments: index),
+                onTap: () async {
+                  // print("note id" + notes[index].id.toString());
+                  await note.setActiveNote(notes[index].id);
+                  Navigator.pushNamed(context, VIEW_NOTE);
+                },
                 child: Container(
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(

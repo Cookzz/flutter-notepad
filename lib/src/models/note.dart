@@ -59,7 +59,7 @@ class NoteModel extends ChangeNotifier {
     // Create the new note object with an id (makes saving in the future easier)
     Notes newNote = Notes(id: _id, title: note['title'], message: note['message']);
 
-    // Add the n0ote to the database with the specified id
+    // Add the note to the database with the specified id
     await _noteStore.record(_id).put(await _db, newNote.toMap());
 
     // Update the UI by fetching a list of notes from the DB and setting to our provider List
@@ -136,7 +136,7 @@ class NoteModel extends ChangeNotifier {
 
   /// Save Active note Edits
   /// When we edit the activenote object, we can save it to persistent storage in the sembast store
-  Future<void> saveActivenoteEdits() async {
+  Future<void> saveActiveNoteEdits() async {
     //    print("Saving Active note, id: " + activeNotes.id.toString());
     //    print("Saving Active note, name: " + activeNotes.name.toString());
 
@@ -156,7 +156,14 @@ class NoteModel extends ChangeNotifier {
   /// Set Active note
   Future<void> setActiveNote(int id) async {
     activeNotes = await getNote(id);
-//    print("Active note Set, ID: " + activeNotes.id.toString());
+    //    print("Active note Set, ID: " + activeNotes.id.toString());
+
+    notifyListeners();
+    return;
+  }
+
+  Future<void> clearActiveNote() async {
+    activeNotes = null;
 
     notifyListeners();
     return;

@@ -1,11 +1,10 @@
 import 'package:custom_notepad/src/models/note.dart';
+import 'package:custom_notepad/src/models/notes_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NoteForm extends StatefulWidget {
-  final int noteIndex;
-
-  NoteForm([this.noteIndex = -1]);
+  NoteForm();
 
   @override
   _NoteFormState createState() => _NoteFormState();
@@ -25,7 +24,7 @@ class _NoteFormState extends State<NoteForm> {
           key: _formKey,
           child: Container(
             padding: EdgeInsets.all(15),
-            child: new NoteFormFieldBuilder(widget.noteIndex), //context seems to be automatically inherited/handled to a child widget)
+            child: new NoteFormFieldBuilder(), //context seems to be automatically inherited/handled to a child widget)
           )
         )
       ),
@@ -34,15 +33,14 @@ class _NoteFormState extends State<NoteForm> {
 }
 
 class NoteFormFieldBuilder extends StatelessWidget {
-  final noteIndex;
-  NoteFormFieldBuilder(this.noteIndex);
+  NoteFormFieldBuilder();
   
   @override
   Widget build(BuildContext context) {
-    final notes = Provider.of<NoteModel>(context, listen: false).notes; 
+    final note = Provider.of<NoteModel>(context, listen: false).getActiveNotes; 
 
-    String title = (noteIndex != -1) ? notes[noteIndex].title : null;
-    String message = (noteIndex != -1) ? notes[noteIndex].title : null;
+    String title = note?.title ?? "";
+    String message = note?.message ?? "";
 
     final titleController = TextEditingController(text: title);
     final messageController = TextEditingController(text: message);
@@ -80,22 +78,26 @@ class NoteFormFieldBuilder extends StatelessWidget {
           ),
           RaisedButton(
             child: Text('Submit'),
-            onPressed: () {
+            onPressed: () async {
               final notesModel = context.read<NoteModel>();
 
               String title = titleController.text;
               String message = messageController.text;
 
-              if (noteIndex == -1){
+              bool isCreating = (note?.id == null);
+
+              if (isCreating){
                 notesModel.createNewNote({
                   "title": title,
                   "message": message
                 });
               } else {
-                // notesModel.updateNote(
-                //   noteIndex, 
-                //   [{"title": title, "message": message}]
-                // );
+                Notes activeNotes = Provider.of<NoteModel>(context, listen: false).getActiveNotes;
+
+                activeNotes.title = title;
+                activeNotes.message = message;
+
+                await Provider.of<NoteModel>(context, listen: false).saveActiveNoteEdits();
               }
 
               Navigator.pop(context);

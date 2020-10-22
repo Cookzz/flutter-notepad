@@ -42,11 +42,9 @@ class MyApp extends StatelessWidget {
           case ADD_NOTE:
             return SlideFromRightRoute(page: NoteForm());
           case EDIT_NOTE:
-            int index = settings.arguments as int;
-            return SlideFromRightRoute(page: NoteForm(index));
+            return SlideFromRightRoute(page: NoteForm());
           case VIEW_NOTE:
-            int mynote = settings.arguments as int;
-            return SlideFromRightRoute(page: MyNote(mynote));
+            return SlideFromRightRoute(page: MyNote());
           default:
             return SlideFromRightRoute(page: Home());
         }

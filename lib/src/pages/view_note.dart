@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyNote extends StatelessWidget {
-  final int index;
-
-  MyNote(this.index);
+  MyNote();
 
   Widget build(BuildContext context) {
-    final notes = Provider.of<NoteModel>(context, listen: false).notes;
+    final note = Provider.of<NoteModel>(context, listen: false).getActiveNotes;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          notes[index].title, 
+          //note title here, 
+          note.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis
         ),
@@ -24,12 +23,10 @@ class MyNote extends StatelessWidget {
             padding: EdgeInsets.all(15),
             child: ConstrainedBox(
               constraints: new BoxConstraints(minHeight: constraints.maxHeight, minWidth: constraints.maxWidth),
-              child: Flexible(
-                child: Text(
-                  notes[index].title,
+              child: Text(
+                  note.message,
                   maxLines: null,
                 ),
-              )
             )
           );
         }
