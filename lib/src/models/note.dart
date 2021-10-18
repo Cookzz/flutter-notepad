@@ -72,8 +72,10 @@ class NoteModel extends ChangeNotifier {
   /// Get all notes
   Future<List<Notes>> getAllNotesByName() async {
     // Finder allows for filtering / sorting
-    final finder = Finder(sortOrders: [SortOrder('title')]);
-    
+    // final finder = Finder(sortOrders: [SortOrder('title')]);
+
+    //sort by id (default)
+    final finder = Finder(sortOrders: [SortOrder('id')]);
 
     // Get the data using our finder for sorting
     final noteSnapshots = await _noteStore.find(

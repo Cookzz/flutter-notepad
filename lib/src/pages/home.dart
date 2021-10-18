@@ -91,6 +91,12 @@ class NoteListBuilder extends Consumer<NoteModel> {
                   await note.setActiveNote(notes[index].id);
                   Navigator.pushNamed(context, VIEW_NOTE);
                 },
+                onLongPress: () {
+                  showMenu(
+                    
+                    context: context
+                  );
+                },
                 child: Container(
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
