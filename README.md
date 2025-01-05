@@ -14,8 +14,8 @@ The original purpose of this project is to create a fully-featured notes with at
 # TODO
 
 ## Important
-- [ ] Fix breaking changes
-- [ ] Upgrade libraries
+- [X] Fix breaking changes
+- [X] Upgrade libraries
 - [ ] Find a suitable replacement for abandoned/unmaintained libraries (if any)
 - [ ] Rewrite part of the codebase to use Dart's new features (if any)
 
