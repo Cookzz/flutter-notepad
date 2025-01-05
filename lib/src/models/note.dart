@@ -43,7 +43,8 @@ import 'notes_dao.dart';
 
 /* New model with sembast implementation */
 class NoteModel extends ChangeNotifier {
-  final StoreRef<int?, Map<String, Object?>> _noteStore = intMapStoreFactory.store(NOTE_STORE_NAME);
+  final StoreRef<int?, Map<String, Object?>> _noteStore =
+      intMapStoreFactory.store(NOTE_STORE_NAME);
 
   Future<Database> get _db async => await AppDatabase.instance.database;
 
@@ -57,7 +58,8 @@ class NoteModel extends ChangeNotifier {
         int.parse(random_string.randomNumeric(2));
 
     // Create the new note object with an id (makes saving in the future easier)
-    Notes newNote = Notes(id: _id, title: note['title'], message: note['message']);
+    Notes newNote =
+        Notes(id: _id, title: note['title'], message: note['message']);
 
     // Add the note to the database with the specified id
     await _noteStore.record(_id).put(await _db, newNote.toMap());
@@ -73,10 +75,10 @@ class NoteModel extends ChangeNotifier {
   Future<List<Notes>> getAllNotesByName() async {
     // Finder allows for filtering / sorting
     final finder = Finder(sortOrders: [SortOrder('title')]);
-    
 
     // Get the data using our finder for sorting
-    final List<RecordSnapshot<int?, Map<String, Object?>>> noteSnapshots = await _noteStore.find(
+    final List<RecordSnapshot<int?, Map<String, Object?>>> noteSnapshots =
+        await _noteStore.find(
       await _db,
       finder: finder,
     );
@@ -103,7 +105,8 @@ class NoteModel extends ChangeNotifier {
     final finder = Finder();
 
     // Get the data using our finder for sorting
-    final List<RecordSnapshot<int?, Map<String, Object?>>> noteSnapshots = await _noteStore.find(
+    final List<RecordSnapshot<int?, Map<String, Object?>>> noteSnapshots =
+        await _noteStore.find(
       await _db,
       finder: finder,
     );
@@ -144,8 +147,7 @@ class NoteModel extends ChangeNotifier {
     final finder = Finder(filter: Filter.byKey(activeNotes!.id));
 
     // Perform the update converting, converting the note to map, and updating the value at key identified by the finder
-    await _noteStore.update(await _db, activeNotes!.toMap(),
-        finder: finder);
+    await _noteStore.update(await _db, activeNotes!.toMap(), finder: finder);
 
     // Refresh notes list for UI
     await getAllNotesByName();
@@ -193,6 +195,10 @@ class NoteModel extends ChangeNotifier {
 
   /// Get Active note
   Notes? get getActiveNotes {
+    if (activeNotes == null) {
+      return Notes(id: 1, title: "", message: "");
+    }
+
     return activeNotes;
   }
 }

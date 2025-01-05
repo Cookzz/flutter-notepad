@@ -80,8 +80,8 @@ class NoteFormFieldBuilder extends StatelessWidget {
             if (isCreating) {
               notesModel.createNewNote({"title": title, "message": message});
             } else {
-              Notes activeNotes =
-                  Provider.of<NoteModel>(context, listen: false).getActiveNotes!;
+              Notes activeNotes = Provider.of<NoteModel>(context, listen: false)
+                  .getActiveNotes!;
 
               activeNotes.title = title;
               activeNotes.message = message;
