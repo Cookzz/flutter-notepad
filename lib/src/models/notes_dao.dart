@@ -1,8 +1,8 @@
 class Notes {
   // Fields
-  int id;
-  String title;
-  String message;
+  int? id;
+  String? title;
+  String? message;
 
   // Constructor
   Notes({this.id, this.title, this.message});

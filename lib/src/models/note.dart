@@ -43,13 +43,13 @@ import 'notes_dao.dart';
 
 /* New model with sembast implementation */
 class NoteModel extends ChangeNotifier {
-  final _noteStore = intMapStoreFactory.store(NOTE_STORE_NAME);
+  final StoreRef<int?, Map<String, Object?>> _noteStore = intMapStoreFactory.store(NOTE_STORE_NAME);
 
   Future<Database> get _db async => await AppDatabase.instance.database;
 
   List<Notes> notes = [];
 
-  Notes activeNotes;
+  Notes? activeNotes;
 
   Future<int> createNewNote(Map<String, String> note) async {
     // Generate a random ID based on the date and a random string for virtual zero chance of duplicates
@@ -76,7 +76,7 @@ class NoteModel extends ChangeNotifier {
     
 
     // Get the data using our finder for sorting
-    final noteSnapshots = await _noteStore.find(
+    final List<RecordSnapshot<int?, Map<String, Object?>>> noteSnapshots = await _noteStore.find(
       await _db,
       finder: finder,
     );
@@ -103,7 +103,7 @@ class NoteModel extends ChangeNotifier {
     final finder = Finder();
 
     // Get the data using our finder for sorting
-    final noteSnapshots = await _noteStore.find(
+    final List<RecordSnapshot<int?, Map<String, Object?>>> noteSnapshots = await _noteStore.find(
       await _db,
       finder: finder,
     );
@@ -121,9 +121,9 @@ class NoteModel extends ChangeNotifier {
   }
 
   /// Get A note
-  Future<Notes> getNote(int id) async {
+  Future<Notes> getNote(int? id) async {
     // Get the note JSON from the sembast DB
-    var record = await _noteStore.record(id).get(await _db);
+    Map<String, Object?> record = (await _noteStore.record(id).get(await _db))!;
     //    print("Record: " + record.toString()); // json of note object
 
     // Convert to a note Object using the fromMap function
@@ -141,10 +141,10 @@ class NoteModel extends ChangeNotifier {
     //    print("Saving Active note, name: " + activeNotes.name.toString());
 
     // Create a finder to isolate this note for update, by key (id).
-    final finder = Finder(filter: Filter.byKey(activeNotes.id));
+    final finder = Finder(filter: Filter.byKey(activeNotes!.id));
 
     // Perform the update converting, converting the note to map, and updating the value at key identified by the finder
-    await _noteStore.update(await _db, activeNotes.toMap(),
+    await _noteStore.update(await _db, activeNotes!.toMap(),
         finder: finder);
 
     // Refresh notes list for UI
@@ -154,7 +154,7 @@ class NoteModel extends ChangeNotifier {
   }
 
   /// Set Active note
-  Future<void> setActiveNote(int id) async {
+  Future<void> setActiveNote(int? id) async {
     activeNotes = await getNote(id);
     //    print("Active note Set, ID: " + activeNotes.id.toString());
 
@@ -171,7 +171,7 @@ class NoteModel extends ChangeNotifier {
 
   /// Delete note
   /// Deletes note from Sembast persistent storage, as well as the UI via a provider update
-  Future<void> deleteNote(int id) async {
+  Future<void> deleteNote(int? id) async {
     // Delete this note from the db
     await _noteStore.record(id).delete(await _db);
 
@@ -192,7 +192,7 @@ class NoteModel extends ChangeNotifier {
   }
 
   /// Get Active note
-  Notes get getActiveNotes {
+  Notes? get getActiveNotes {
     return activeNotes;
   }
 }
