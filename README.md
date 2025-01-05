@@ -1,8 +1,11 @@
 # Announcement
 
-I have previously abandoned this project due to: a) lack of motivation to continue working on this project, and b) busy with work + real life issues
+Happy New Years, 2025.
 
-But I have returned to resume to work on this project since I am still using this app until now. However, it will take awhile since I have to re-learn Dart from scratch and settle all of the deprecations hopefully by either the end of the month or in the middle of July.
+As usual, I abandoned this project because of lack of motivation.
+My resolution this time is to actually finish a project for once, so I'll put most of my free time (if it doesn't involve gaming) to updating this project and re-learning dart.
+
+I have learnt a lot of new skills and tools since then from work, so expect smoother progress.
 
 # Flutter Notepad
 
