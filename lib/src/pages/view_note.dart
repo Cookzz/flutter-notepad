@@ -6,13 +6,13 @@ class MyNote extends StatelessWidget {
   MyNote();
 
   Widget build(BuildContext context) {
-    final note = Provider.of<NoteModel>(context, listen: false).getActiveNotes;
+    final note = Provider.of<NoteModel>(context, listen: false).getActiveNotes!;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           //note title here, 
-          note.title,
+          note.title!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis
         ),
@@ -24,7 +24,7 @@ class MyNote extends StatelessWidget {
             child: ConstrainedBox(
               constraints: new BoxConstraints(minHeight: constraints.maxHeight, minWidth: constraints.maxWidth),
               child: Text(
-                  note.message,
+                  note.message!,
                   maxLines: null,
                 ),
             )

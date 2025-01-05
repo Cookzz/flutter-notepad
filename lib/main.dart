@@ -16,14 +16,14 @@ import 'src/models/note.dart';
 /* components */
 import 'src/components/route_builder.dart';
 
-void main() => {
+void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => NoteModel(),
       child: MyApp()
     )
-  )
-};
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
