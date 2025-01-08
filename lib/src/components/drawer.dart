@@ -4,7 +4,7 @@ class DrawerBuilder extends StatelessWidget {
   final list;
 
   //provide a default drawer items
-  DrawerBuilder({this.list: const [
+  DrawerBuilder({this.list = const [
     {'type': 'header', 'label': 'Drawer'},
     {'type': 'item', 'label': 'Item 1'},
     {'type': 'item', 'label': 'Item 2'},
