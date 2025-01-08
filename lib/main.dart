@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'src/pages/home.dart';
 import 'src/pages/note_form.dart';
 import 'src/pages/view_note.dart';
+import 'src/pages/settings.dart';
 
 /* constants */
 import 'src/constants/routes.dart';
@@ -18,11 +19,7 @@ import 'src/components/route_builder.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => NoteModel(),
-      child: MyApp()
-    )
-  );
+      ChangeNotifierProvider(create: (context) => NoteModel(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +33,7 @@ class MyApp extends StatelessWidget {
       //   '/add': (context) => NoteForm()
       // },
       onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name){
+        switch (settings.name) {
           case HOME:
             return SlideFromRightRoute(page: Home());
           case ADD_NOTE:
@@ -45,6 +42,8 @@ class MyApp extends StatelessWidget {
             return SlideFromRightRoute(page: NoteForm());
           case VIEW_NOTE:
             return SlideFromRightRoute(page: MyNote());
+          case SETTINGS:
+            return SlideFromRightRoute(page: Settings());
           default:
             return SlideFromRightRoute(page: Home());
         }
